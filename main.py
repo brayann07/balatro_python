@@ -23,16 +23,19 @@ pygame.init()
 TESTE = False
 
 if TESTE:
-    screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
+    screen = pygame.display.set_mode((1288, 728), pygame.SCALED | pygame.FULLSCREEN)
 else:
-    screen = pygame.display.set_mode((1288,728))
+    screen = pygame.display.set_mode((1288, 728), pygame.SCALED | pygame.RESIZABLE)
 
 clock = pygame.time.Clock()
 running = True
 pygame.display.set_caption("PYLATRO")
 
-carta1 = classes.Carta("A", "COPA", globais.sprites_cartas,(100, 100))
-carta2 = classes.Carta("K", "ESPADA", globais.sprites_cartas,(300, 100))
+fonte = pygame.font.Font("fontes/comicsans.ttf", 25)
+
+# configs
+carta_virada = globais.carta_parente_atras
+num_cartas = 5
 
 
 # Loop de jogo
@@ -43,12 +46,21 @@ while running:
             running = False
 
     # Desenha a cor da tela no fundo
-    screen.fill("purple")
+    screen.fill("black")
 
     # Lógica do jogo 
+    
 
-    carta1.desenhar(screen)
-    carta2.desenhar(screen)
+
+    # cartas dianteira baixo
+    for i in range(num_cartas):
+        screen.blit(carta_virada,(1100 - 6 * i,500 - 6 * i))
+    funcoes.escrever(screen,
+        f"{len(globais.cartas_atuais)}/{len(globais.cartas_atuais)}"
+        ,fonte, (1165,460),
+          centralizado=True,
+          pixel_art = False
+    )
 
     # renderização
     pygame.display.flip()

@@ -17,7 +17,7 @@ def carregar_sprites_valores():
     altura = altura // colunas
     for l, naipe in enumerate(ordem_naipe):
         for c, valor in enumerate(ordem_valores):
-            rect = pygame.Rect(c * largura, l * largura, largura, altura)
+            rect = pygame.Rect(c * largura, l * altura, largura, altura) 
             carta = sheet.subsurface(rect)
             carta = pygame.transform.scale(carta, (largura * valor_global_escala, altura * valor_global_escala))
             sprites[(valor, naipe)] = carta
@@ -30,3 +30,14 @@ def pegar_rect_especifico(caminho,x,y,largura,altura):
     sprite = sheet.subsurface(rect)
     sprite = pygame.transform.scale(sprite,(largura * valor_global_escala, altura * valor_global_escala))
     return sprite
+
+
+def escalar(sprite, fator):
+    largura, altura = sprite.get_size()
+    novo_tamanho = (int(largura * fator), int(altura * fator))
+    return pygame.transform.scale(sprite, novo_tamanho)
+
+def escrever(tela, texto, fonte, pos, cor="white", centralizado=False, pixel_art=True):
+    surf = fonte.render(texto, not pixel_art, cor)
+    rect = surf.get_rect(center=pos) if centralizado else surf.get_rect(topleft=pos)
+    tela.blit(surf, rect)

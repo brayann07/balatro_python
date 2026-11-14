@@ -1,3 +1,4 @@
+import arquivos_py.funcoes as funcoes
 import arquivos_py.globais as globais
 
 class Carta:
@@ -7,7 +8,6 @@ class Carta:
         self.frente = sprites[(valor, naipe)]
         self.fundo = globais.carta_parente_frente
         self.rect = self.frente.get_rect(topleft=pos)
-
 
     def desenhar(self, tela):
        tela.blit(self.fundo, self.rect)
