@@ -1,69 +1,43 @@
-# Descrição sobre o trabalho
-""" 
-REQUISITOS DO TRABALHO:
-for ✅
-while ✅
-if 
-elif
-dicionarios ✅
-funções ✅
-menu interativo 
-salvamento  
-"""
+# Dias sem usar IA - 0 dias
 
 # Bibliotecas/Imports
-import pygame as pygame
-lazy import arquivos_py.funcoes as funcoes
-lazy import arquivos_py.classes as classes
-lazy import arquivos_py.globais as globais
+import pygame
+lazy import modulos.configs as configuracoes
+lazy import modulos.eventos as eventos
+lazy import modulos.runtime as runtime
 
-# Evento iniciais do PyGame 
-pygame.init()
+def iniciar():
+    # init tem que ser chamado pra começar a biblioteca do pygame
+    pygame.init()
 
-TESTE = False
+    # configs globais declaradas no modulos/configs_pyg.py
+    tela = pygame.display.set_mode(configuracoes.RESOLUCAO_PADRAO, pygame.SCALED | pygame.RESIZABLE) # Tamanho da janela
+    pygame.display.set_caption(configuracoes.NOME_DA_JANELA) # nome da janela
+    pygame.display.set_icon(configuracoes.IMAGEM_JANELA) # icone da janela
+    clock = pygame.time.Clock()
 
-if TESTE:
-    screen = pygame.display.set_mode((1288, 728), pygame.SCALED | pygame.FULLSCREEN)
-else:
-    screen = pygame.display.set_mode((1288, 728), pygame.SCALED | pygame.RESIZABLE)
-
-clock = pygame.time.Clock()
-running = True
-pygame.display.set_caption("PYLATRO")
-
-fonte = pygame.font.Font("fontes/comicsans.ttf", 25)
-
-# configs
-carta_virada = globais.carta_parente_atras
-num_cartas = 5
+    running = True
+    while running:
+        # ESSE EVENTO SEMPRE DEVE RODAR ANTES DE TUDO
+        for evento in pygame.event.get():
+            if evento.type == pygame.QUIT:
+                running = False
 
 
-# Loop de jogo
-while running:
-    # eventos do pygame, inputs e tals
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            running = False
-
-    # Desenha a cor da tela no fundo
-    screen.fill("black")
-
-    # Lógica do jogo 
+        # aqui a gente coloca nossa logica de jogo
+        runtime.runtime(tela)
     
+        # isso aqui basicamente é coisas do modulo do pygame
+        pygame.display.flip()
+        clock.tick(configuracoes.FPS)  
 
+    # sempre bom garantir né...
+    if running:
+        running = False
 
-    # cartas dianteira baixo
-    for i in range(num_cartas):
-        screen.blit(carta_virada,(1100 - 6 * i,500 - 6 * i))
-    funcoes.escrever(screen,
-        f"{len(globais.cartas_atuais)}/{len(globais.cartas_atuais)}"
-        ,fonte, (1165,460),
-          centralizado=True,
-          pixel_art = False
-    )
+    # acaba com os processos
+    pygame.quit()
 
-    # renderização
-    pygame.display.flip()
-    clock.tick(60)  # FPS
-
-pygame.quit()
+# sempre bom colocar um main pq eu sou tanso e fico rodando em outros arquivos sem querer
+if __name__ == "__main__":
+    iniciar()

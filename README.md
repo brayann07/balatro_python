@@ -1,2 +1,2 @@
-# balatro_python
-Trabalho de final de semestre de programação
+# tem q instalar a build noturna
+pip install pygame_ce 

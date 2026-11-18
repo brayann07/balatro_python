@@ -1,5 +1,6 @@
 import pygame
 
+# classe de tween que roubei do roblox kk
 def linear(t):
     return t
 
